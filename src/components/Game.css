@@ -1,0 +1,5 @@
+.game {
+  display: flex;
+  height: 100vh; /* Занимает 100% высоты экрана */
+  background-color: #0c8202;
+}

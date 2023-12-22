@@ -1,0 +1,49 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+table {
+  background: #012b39;
+  border-radius: 0.25em;
+  border-collapse: collapse;
+  margin: auto;
+  width: 500px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #1234e2;
+}
+
+th {
+  border-bottom: 1px solid #364043;
+  color: #e2b842;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  text-align: center;
+}
+td {
+  color: #fff;
+  font-weight: 400;
+  padding: 0.65em 1em;
+}
+.disabled td {
+  color: #4f5f64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #014055;
+}
+.btn_History {
+  position: fixed;
+  top: 20px; /* Верхний отступ от верхней границы окна */
+  right: 20px; /* Правый отступ от правой границы окна */
+}

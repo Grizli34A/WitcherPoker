@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+form {
+  background-color: #fbf788;
+  height: 400px;
+  width: 430px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+input {
+  width: 370px;
+  height: 70px;
+  border-radius: 15px;
+  border: none;
+  font-size: 20px;
+  padding-left: 10px;
+}
+button {
+  background-color: #ff64ef;
+  width: 150px;
+}
+button:hover {
+  background-color: #f038ff;
+  color: #fff;
+  border: 1px solid #f038ff;
+  box-shadow: 10px 10px 100px 6px #f038ff;
+}
+.error-message {
+  color: red;
+  font-size: 24px;
+  font-weight: 600;
+}

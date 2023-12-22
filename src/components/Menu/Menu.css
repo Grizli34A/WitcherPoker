@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.btn_Menu {
+  width: 350px;
+  background-color: rgb(210, 40, 74);
+}
+.btn_Menu:hover {
+  background-color: rgb(232, 74, 106);
+  color: #fff;
+  border: 1px solid rgb(232, 74, 106);
+  box-shadow: 10px 10px 100px 6px rgb(232, 74, 106);
+}
