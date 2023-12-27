@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import "./History.css";
+import CustomFilter from "../CustomFilter";
 const History = ({ exitPath }) => {
+  const [originalPredictions, setOriginalPredictions] = useState([]);
   const [predictions, setPredictions] = useState([]);
-
+  const [sortBy, setSortBy] = useState("");
   const navigator = useNavigate();
   useEffect(() => {
     const getData = async () => {
@@ -17,7 +19,10 @@ const History = ({ exitPath }) => {
               page: 1,
             },
           })
-          .then((response) => setPredictions(response.data));
+          .then((response) => {
+            setPredictions(response.data);
+            setOriginalPredictions(response.data);
+          });
         // console.log(response);
         //ну или как-то иначе
       } catch (error) {
@@ -26,31 +31,81 @@ const History = ({ exitPath }) => {
     };
     getData();
   }, []);
+  useEffect(() => {
+    let sortedPredictions = [...predictions];
+    switch (sortBy) {
+      case "сначала старые":
+        sortedPredictions.sort(function (a, b) {
+          return a.number - b.number;
+        });
+        break;
+      case "сначала новые":
+        console.log("новые");
+        sortedPredictions.sort(function (a, b) {
+          return b.number - a.number;
+        });
+        break;
+      case "по победам":
+        sortedPredictions.sort((a, b) => {
+          return Number(b.result) - Number(a.result);
+        });
+        break;
+      case "по поражениям":
+        sortedPredictions.sort((a, b) => {
+          return Number(a.result) - Number(b.result);
+        });
+        break;
+      case "по возрастанию процента":
+        sortedPredictions.sort((a, b) => {
+          return a.predict - b.predict;
+        });
+        break;
+      case "по убыванию процента":
+        sortedPredictions.sort((a, b) => {
+          return b.predict - a.predict;
+        });
+        break;
+    }
+
+    setPredictions(sortedPredictions);
+  }, [sortBy]);
   return (
     <>
       <h1>История прогнозов</h1>
+      <CustomFilter
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        predictions={predictions}
+        setPredictions={setPredictions}
+        originalPredictions={originalPredictions}
+      />
       {predictions.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>№ Прогноза</th>
-              <th>Прогноз системы</th>
-              <th>Исход</th>
-            </tr>
-          </thead>
-          <tbody>
-            {predictions.map((predict, index) => {
-              console.log(predict);
-              return (
-                <tr key={index}>
-                  <td>{++index}</td>
-                  <td>{Math.round(predict.predict * 100).toString() + " %"}</td>
-                  <td>{predict.result ? "win" : "lose"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>№ Прогноза</th>
+                <th>№ Игры</th>
+                <th>Прогноз системы</th>
+                <th>Исход</th>
+              </tr>
+            </thead>
+            <tbody>
+              {predictions.map((predict, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{++index}</td>
+                    <td>{predict.number}</td>
+                    <td>
+                      {Math.round(predict.predict * 100).toString() + "%"}
+                    </td>
+                    <td>{predict.result ? "win" : "lose"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
       ) : (
         <p>Нет данных</p>
       )}

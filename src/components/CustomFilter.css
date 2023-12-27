@@ -1,0 +1,31 @@
+.filterSorting {
+  position: fixed;
+  top: 10%;
+  left: 5%;
+}
+.idFilter {
+  width: 80px;
+  height: 30px;
+  font-size: small;
+}
+select {
+  margin-bottom: 50px;
+}
+.input__percent {
+  background: linear-gradient(
+    to right,
+    #ff2f00 0%,
+    #82cfd0 50%,
+    #1ced15 50%,
+    #ee6595 100%
+  );
+  border-radius: 8px;
+  height: 7px;
+  width: 356px;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none; /* для Chrome и Safari */
+  -moz-appearance: none; /* для Firefox */
+  appearance: none;
+  margin-bottom: 20px;
+}
