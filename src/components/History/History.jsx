@@ -7,6 +7,7 @@ const History = ({ exitPath }) => {
   const [originalPredictions, setOriginalPredictions] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [sortBy, setSortBy] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigator = useNavigate();
   useEffect(() => {
     const getData = async () => {
@@ -31,6 +32,21 @@ const History = ({ exitPath }) => {
     };
     getData();
   }, []);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(predictions.length / itemsPerPage);
+  const currentData = predictions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Функции для управления пагинацией
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
   useEffect(() => {
     let sortedPredictions = [...predictions];
     switch (sortBy) {
@@ -91,10 +107,10 @@ const History = ({ exitPath }) => {
               </tr>
             </thead>
             <tbody>
-              {predictions.map((predict, index) => {
+              {currentData.map((predict, index) => {
                 return (
                   <tr key={index}>
-                    <td>{++index}</td>
+                    <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                     <td>{predict.number}</td>
                     <td>
                       {Math.round(predict.predict * 100).toString() + "%"}
@@ -105,6 +121,17 @@ const History = ({ exitPath }) => {
               })}
             </tbody>
           </table>
+          <div className="btn-page">
+            <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+              Назад
+            </button>
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Вперед
+            </button>
+          </div>
         </>
       ) : (
         <p>Нет данных</p>
